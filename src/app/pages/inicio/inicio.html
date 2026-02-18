@@ -1,0 +1,88 @@
+<app-navbar></app-navbar>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="content">
+    <img src="logo.png" alt="Logo del Hotel" class="hero-logo" />
+
+    <h1>Bienvenido al Hospedaje Santandereano del Sur</h1>
+
+    <p>
+      Descubre el espacio perfecto para tu estancia en Santandereano del Sur.
+    </p>
+  </div>
+</section>
+
+<!-- HABITACIONES -->
+<section class="rooms">
+  <div class="container">
+
+    <h2 class="section-title">Nuestras Habitaciones</h2>
+
+    <p class="section-subtitle">
+      Descubre el espacio perfecto para tu estancia en Santandereano del Sur.
+    </p>
+
+    <div class="room-grid">
+
+      <!-- Angular reemplazo de {#each} -->
+      <div class="room-card" *ngFor="let room of habitaciones">
+
+        <div class="room-image-placeholder">
+          <img
+            [src]="room.imagen"
+            [alt]="'Habitación ' + room.nombre"
+            class="room-image"
+          />
+        </div>
+
+        <div class="card-content">
+          <h3>{{ room.nombre }}</h3>
+          <p>{{ room.descripcion }}</p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="container about-grid">
+
+    <div class="about-content">
+      <h2 class="section-title about-title">
+        Nuestra Historia y Misión
+      </h2>
+
+      <p class="lead-text">
+        En Hospedaje Santandereano del Sur, nuestra misión es ofrecer un refugio
+        de paz y comodidad, combinado con la eficiencia de la tecnología moderna.
+      </p>
+
+      <p>
+        Fundado en el corazón de Santander, hemos crecido manteniendo la calidez
+        de la hospitalidad tradicional colombiana. Cada rincón de nuestro hotel
+        está diseñado pensando en su descanso y productividad.
+      </p>
+
+      <p>
+        Usamos la Inteligencia Artificial no solo para gestionar reservas
+        eficientemente, sino para personalizar su estancia.
+      </p>
+    </div>
+
+    <div class="about-image">
+      <img
+        src="img/portada/sobreNosotros.png"
+        alt="Vista frontal del Hospedaje Santandereano del Sur"
+        class="hotel-img"
+      />
+    </div>
+
+  </div>
+</section>
+
+
+<app-footer></app-footer>
