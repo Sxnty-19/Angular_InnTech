@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<app-navbara></app-navbara>
+<section class="main-content">
+  @if (user()) {
+    <div class="welcome-box">
+      <h2 class="title">
+        ¡Bienvenido(a)! <br />
+        <span class="highlight">{{ displayName() }}</span>
+      </h2>
+      <div class="tip-box">
+        <p>
+          Utiliza la barra de "Módulos" (arriba) para navegar a las distintas
+          secciones de gestión. Tu rol actual es: 
+          <strong>{{ user().rol }}</strong>.
+        </p>
+      </div>
+    </div>
+  } @else {
+    <div class="no-user-message">
+      <h2 class="title">Cargando...</h2>
+      <p>
+        Si esto tarda, por favor, 
+        <a routerLink="/login" class="login-link">inicia sesión</a>.
+      </p>
+    </div>
+  }
+</section>
+<app-footer></app-footer>

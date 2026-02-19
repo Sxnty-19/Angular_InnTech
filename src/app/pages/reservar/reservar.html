@@ -1,0 +1,100 @@
+<app-navbar></app-navbar>
+<app-navbara></app-navbara>
+<section class="main-container">
+  <div class="content-wrapper">
+    <h1 class="page-title">Administrar Reservas</h1>
+
+    <div class="category-tabs">
+      <button class="tab-btn" [class.active]="activeTab() === 'crear'" (click)="activeTab.set('crear')">
+        <i class="fas fa-plus-circle"></i> Crear Reserva
+      </button>
+      <button class="tab-btn" [class.active]="activeTab() === 'activas'" (click)="activeTab.set('activas')">
+        <i class="fas fa-calendar-check"></i> Reservas Activas
+      </button>
+    </div>
+
+    @if (activeTab() === 'crear') {
+      <div class="tab-content card-two-columns">
+        <div class="two-column-layout">
+          <div class="column-box">
+            <h3 class="box-subtitle">1. Buscar Disponibilidad</h3>
+            <div class="form-grid">
+              <div class="input-group">
+                <label>Inicio</label>
+                <input type="date" [(ngModel)]="date_start">
+              </div>
+              <div class="input-group">
+                <label>Fin</label>
+                <input type="date" [(ngModel)]="date_end">
+              </div>
+              <button class="btn-accent btn-search" (click)="buscarHabitaciones()" [disabled]="isLoading()">
+                @if (isLoading()) { <i class="fas fa-spinner fa-spin"></i> } @else { Buscar }
+              </button>
+            </div>
+
+            <div class="room-list mt-6">
+              <h4 class="list-title">Disponibles ({{availRooms().length}})</h4>
+              <ul class="list">
+                @for (hab of availRooms(); track hab.id) {
+                  <li class="list-item">
+                    <span>{{hab.nombre}}</span>
+                    <button class="btn-secondary" (click)="agregarHab(hab)">Agregar</button>
+                  </li>
+                }
+              </ul>
+            </div>
+          </div>
+
+          <div class="column-box">
+            <h3 class="box-subtitle">2. Confirmar</h3>
+            <div class="room-list">
+              @for (s of selectedRooms(); track s.id) {
+                <li class="list-item selected">
+                  <span>{{s.nombre}}</span>
+                  <button class="btn-danger" (click)="quitarHab(s.id)">Quitar</button>
+                </li>
+              }
+            </div>
+            <button class="btn-primary btn-confirm" (click)="confirmarReserva()" 
+                    [disabled]="selectedRooms().length === 0 || isLoading()">
+              Confirmar Reserva ({{selectedRooms().length}})
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (activeTab() === 'activas') {
+      <div class="tab-content">
+        <div class="card">
+          <h2 class="card-title">Mis Reservas</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr><th>ID</th><th>Inicio</th><th>Fin</th><th>Acción</th></tr>
+              </thead>
+              <tbody>
+                @for (r of reservasActivas(); track r.id_reserva) {
+                  <tr>
+                    <td>{{r.id_reserva}}</td>
+                    <td>{{r.date_start | slice:0:10}}</td>
+                    <td>{{r.date_end | slice:0:10}}</td>
+                    <td><button class="btn-cancel">Cancelar</button></td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+@if (showMessage()) {
+  <div class="message-modal">
+    <div class="message-content" [class.success]="isSuccess()">
+      <p>{{ message() }}</p>
+    </div>
+  </div>
+}<app-footer></app-footer>
