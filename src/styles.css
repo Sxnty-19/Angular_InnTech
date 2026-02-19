@@ -23,3 +23,17 @@ app-root {
   flex: 1;
   padding-top: 80px; /* por navbar fixed */
 }
+/* ... lo que ya tienes ... */
+
+:root {
+    --color-primary: #1e3a8a;
+    --color-secondary: #fcd34d;
+    --color-dark: #0f172a;
+    --color-text: #e2e8f0;
+    --color-light: #ffffff;
+    --color-background-gray: #f8f8f8;
+    --color-dark-text: #1f2937;
+    --color-medium-gray: #4b5563;
+    --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --shadow-lift: 0 10px 25px rgba(0, 0, 0, 0.1);
+}

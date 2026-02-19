@@ -1,0 +1,294 @@
+/* ---------------------------------- */
+/* CONTENEDOR PRINCIPAL */
+/* ---------------------------------- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-dark);
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.section-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-dark);
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* ---------------------------------- */
+/* NAVBAR (Corregida) */
+/* ---------------------------------- */
+nav.navbar {
+    background: var(--color-dark);
+    color: var(--color-text);
+    padding: 12px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%; /* Asegura que cubra todo el ancho */
+    left: 0;     /* Alineación al borde izquierdo */
+    top: 0;
+    z-index: 1000; /* Elevado para estar sobre todo */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none; /* Elimina subrayado si es un enlace */
+}
+
+.logo img {
+    transition: transform 0.3s ease;
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.logo:hover img {
+    transform: scale(1.05) rotate(-2deg);
+}
+
+.site-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--color-light);
+    text-decoration: none;
+    letter-spacing: 0.8px;
+    transition: color 0.3s;
+}
+
+.menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link {
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.3s;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-link:hover {
+    color: var(--color-secondary);
+    border-bottom: 2px solid var(--color-secondary);
+    padding-bottom: 3px;
+}
+
+/* ---------------------------------- */
+/* BOTONES */
+/* ---------------------------------- */
+.btn {
+    padding: 9px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+
+.btn-outline:hover {
+    background: var(--color-secondary);
+    color: var(--color-dark);
+    box-shadow: 0 4px 10px rgba(252, 211, 77, 0.4);
+}
+
+/* ---------------------------------- */
+/* HERO SECTION (Corregida) */
+/* ---------------------------------- */
+section.hero {
+    min-height: 100vh;
+    background: var(--color-dark);
+    /* Degradado corregido para mejor legibilidad */
+    background-image: linear-gradient(
+            135deg,
+            rgba(0, 0, 0, 0.8) 0%,
+            var(--color-dark) 80%
+        );
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 20px 60px; /* Padding superior para no quedar bajo la navbar */
+}
+
+.content {
+    max-width: 900px;
+    opacity: 0;
+    animation: fadeIn 1.2s ease-out 0.2s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-logo {
+    width: 120px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--color-secondary);
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    color: var(--color-text);
+    max-width: 700px;
+    margin: 0 auto 30px;
+}
+
+/* ---------------------------------- */
+/* ROOMS SECTION */
+/* ---------------------------------- */
+.rooms {
+    padding: 100px 0;
+    background-color: var(--color-background-gray);
+}
+
+.room-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.room-card {
+    background: var(--color-light);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-subtle);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.room-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lift);
+}
+
+.room-image-placeholder {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.room-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(40%);
+    transition: all 0.5s ease;
+}
+
+.room-card:hover .room-image {
+    transform: scale(1.1);
+    filter: grayscale(0%);
+}
+
+.card-content {
+    padding: 25px;
+}
+
+.card-content h3 {
+    font-size: 1.4rem;
+    color: var(--color-dark);
+    margin-bottom: 12px;
+}
+
+.card-content p {
+    color: var(--color-medium-gray);
+    line-height: 1.6;
+}
+
+/* ---------------------------------- */
+/* ABOUT SECTION */
+/* ---------------------------------- */
+.about {
+    padding: 100px 0;
+    background-color: var(--color-light);
+}
+
+.historia {
+    color: var(--color-dark);
+    margin-bottom: 20px;
+}
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.about-title {
+    text-align: left;
+}
+
+.lead-text {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: 20px;
+}
+
+.about-image {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lift);
+    transform: rotate(-2deg);
+    transition: all 0.5s ease;
+}
+
+.about-image:hover {
+    transform: rotate(0deg) scale(1.02);
+}
+
+.hotel-img {
+    width: 100%;
+    display: block;
+}
+
+/* ---------------------------------- */
+/* RESPONSIVE */
+/* ---------------------------------- */
+@media (max-width: 992px) {
+    nav.navbar { padding: 12px 30px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-image { order: -1; transform: rotate(0); }
+    .about-title { text-align: center; }
+    h1 { font-size: 2.8rem; }
+}
+
+@media (max-width: 768px) {
+    .menu { display: none; } /* Podrías implementar un menú hamburguesa aquí */
+    .section-title { font-size: 2rem; }
+    section.hero { padding-top: 140px; }
+}
