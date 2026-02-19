@@ -1,0 +1,98 @@
+<app-navbar></app-navbar>
+<app-navbara></app-navbara>
+<section class="main">
+  <div class="main-content">
+    <h1 class="page-title">Información Turística</h1>
+    <p class="intro-text">
+      Descubra los eventos, lugares y servicios disponibles para enriquecer su visita. 
+      Actualizado en tiempo real.
+    </p>
+
+    <div class="category-tabs">
+      <button class="tab-btn" [class.active]="currentCategory() === 'eventos'" (click)="currentCategory.set('eventos')">
+        Eventos Destacados
+      </button>
+      <button class="tab-btn" [class.active]="currentCategory() === 'lugares'" (click)="currentCategory.set('lugares')">
+        Lugares Turísticos
+      </button>
+      <button class="tab-btn" [class.active]="currentCategory() === 'servicios'" (click)="currentCategory.set('servicios')">
+        Servicios
+      </button>
+    </div>
+
+    <div class="content-display">
+      
+      @if (currentCategory() === 'eventos') {
+        <div class="info-section slide-in">
+          <h2 class="section-title">Eventos</h2>
+          @if (loading().eventos) { <div class="loading-bar"></div> }
+          @else if (errors().eventos) { <p class="message error-msg">{{errors().eventos}}</p> }
+          @else {
+            <div class="card-grid">
+              @for (e of eventos(); track e.id) {
+                <div class="card">
+                  <h3 class="card-name">{{ getFieldValue(e, 'nombre', 'title') }}</h3>
+                  <div class="card-detail">
+                    <span class="detail-label">Fecha:</span>
+                    <span class="detail-value">{{ getFieldValue(e, 'fecha_inicio', 'date') }}</span>
+                  </div>
+                  <div class="card-description">
+                    <p class="description-text">{{ getFieldValue(e, 'descripcion', 'description') }}</p>
+                  </div>
+                </div>
+              } @empty { <p class="message">No hay eventos próximos.</p> }
+            </div>
+          }
+        </div>
+      }
+
+      @if (currentCategory() === 'lugares') {
+        <div class="info-section slide-in">
+          <h2 class="section-title">Lugares</h2>
+          @if (loading().lugares) { <div class="loading-bar"></div> }
+          @else {
+            <div class="card-grid">
+              @for (l of lugares(); track l.id) {
+                <div class="card">
+                  <h3 class="card-name">{{ getFieldValue(l, 'nombre', 'name') }}</h3>
+                  <div class="card-detail">
+                    <span class="detail-label">Tipo:</span>
+                    <span class="detail-value">{{ getFieldValue(l, 'tipo', 'type') }}</span>
+                  </div>
+                  <div class="card-description">
+                    <p class="description-text">{{ getFieldValue(l, 'descripcion', 'description') }}</p>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      @if (currentCategory() === 'servicios') {
+        <div class="info-section slide-in">
+          <h2 class="section-title">Servicios</h2>
+          @if (loading().servicios) { <div class="loading-bar"></div> }
+          @else {
+            <div class="card-grid">
+              @for (s of servicios(); track s.id) {
+                <div class="card">
+                  <h3 class="card-name">{{ getFieldValue(s, 'nombre', 'name') }}</h3>
+                  <div class="card-detail">
+                    <span class="detail-label">Contacto:</span>
+                    <span class="detail-value">{{ getFieldValue(s, 'contacto', 'phone') }}</span>
+                  </div>
+                  <div class="card-description">
+                    <p class="description-text">{{ getFieldValue(s, 'descripcion', 'description') }}</p>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+
+    </div>
+  </div>
+</section>
+<app-footer></app-footer>

@@ -1,0 +1,45 @@
+<app-navbar></app-navbar>
+<app-navbara></app-navbara>
+<section class="main">
+  <h1 class="page-title">Historial de Reservas</h1>
+
+  @if (isLoading()) {
+    <div class="loading-container-bar">
+      <div class="loading-bar"></div>
+    </div>
+  } @else if (error() && historial().length === 0) {
+    <p class="error">{{ error() }}</p>
+  } @else if (historial().length > 0) {
+    <div class="table-wrap">
+      <table class="tabla" [class.fade-in]="isLoaded()">
+        <thead>
+          <tr>
+            <th>ID Reserva</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (item of historial(); track item.id_reserva; let i = $index) {
+            <tr [style.animation-delay]="(i * 0.05) + 's'">
+              <td class="highlight">{{ item.id_reserva }}</td>
+              <td>{{ item.date_start | slice:0:10 }}</td>
+              <td>{{ item.date_end | slice:0:10 }}</td>
+              <td>
+                <span [ngClass]="{
+                  'estado-terminado': item.estado === 'terminada',
+                  'estado-cancelado': item.estado === 'cancelada'
+                }">
+                  {{ item.estado }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>
+<app-footer></app-footer>

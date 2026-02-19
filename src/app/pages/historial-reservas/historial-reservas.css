@@ -1,0 +1,107 @@
+:host {
+  display: block;
+  background-color: var(color-dark); /* Asegura fondo sólido */
+}
+
+.main {
+  min-height: calc(100vh - 160px);
+  padding: 60px 20px;
+  background: var(--color-dark);
+  color: #e5e7eb;
+}
+
+.page-title {
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: #fcd34d;
+  margin-bottom: 30px;
+  font-weight: 800;
+}
+
+/* --- Animaciones --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tabla.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.tabla tbody tr {
+  opacity: 0;
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+/* --- Tabla --- */
+.table-wrap {
+  overflow-x: auto;
+  max-height: 60vh;
+  overflow-y: auto;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  margin: 0 auto;
+  max-width: 1000px;
+  background: #111827;
+}
+
+.tabla {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #111827;
+}
+
+th {
+  padding: 18px 20px;
+  background: #1e3a8a; /* Azul primario sólido */
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #374151;
+}
+
+.highlight { color: #fcd34d; font-weight: 600; }
+
+.estado-terminado {
+  background-color: #10b981;
+  color: #111827;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.estado-cancelado {
+  background-color: #ef4444;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+/* --- Loading Bar --- */
+.loading-container-bar { width: 80%; max-width: 600px; margin: 20px auto; }
+.loading-bar { width: 100%; height: 4px; background: #1e293b; overflow: hidden; }
+.loading-bar::before {
+  content: ""; display: block; height: 100%; width: 30%;
+  background: linear-gradient(90deg, #1e3a8a, #fcd34d);
+  animation: loading-move 1.5s infinite linear;
+}
+
+@keyframes loading-move {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(333%); }
+}

@@ -1,0 +1,275 @@
+/* ---------------------------------- */
+/* VARIABLES Y CONFIGURACIÓN BASE */
+/* ---------------------------------- */
+:host {
+  display: block;
+  background-color: #1a202c; /* Fondo sólido del componente */
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ---------------------------------- */
+/* LAYOUT PRINCIPAL */
+/* ---------------------------------- */
+.main {
+  background: #1a202c;
+  min-height: calc(100vh - 160px);
+  padding: 30px 20px;
+  color: #e2e8f0;
+}
+
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-title {
+  text-align: center;
+  color: #fcd34d; /* Amarillo Accent */
+  margin-bottom: 10px;
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.intro-text {
+  text-align: center;
+  color: #94a3b8;
+  margin-bottom: 40px;
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* ---------------------------------- */
+/* NAVEGACIÓN POR PESTAÑAS (TABS) */
+/* ---------------------------------- */
+.category-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 45px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 12px 28px;
+  border: 2px solid #334155;
+  border-radius: 10px;
+  background-color: #0f172a;
+  color: #94a3b8;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
+}
+
+.tab-btn:hover {
+  background-color: #1e293b;
+  color: #ffffff;
+  border-color: #475569;
+  transform: translateY(-2px);
+}
+
+.tab-btn.active {
+  border-color: #1e3a8a;
+  background-color: #1e3a8a;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  transform: translateY(0);
+}
+
+/* ---------------------------------- */
+/* SECCIONES DE CONTENIDO */
+/* ---------------------------------- */
+.section-title {
+  color: #ffffff;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #fcd34d;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* ---------------------------------- */
+/* GRID Y TARJETAS (CARDS) */
+/* ---------------------------------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.card {
+  background: #0f172a; /* Fondo oscuro sólido */
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  border: 1px solid #1e293b;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: #334155;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.5);
+}
+
+.card-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fcd34d;
+  margin-bottom: 18px;
+  line-height: 1.2;
+}
+
+.card-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.detail-label {
+  color: #94a3b8;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detail-value {
+  color: #f1f5f9;
+  font-weight: 600;
+  text-align: right;
+}
+
+.card-description {
+  margin-top: 15px;
+  padding-top: 15px;
+}
+
+.description-text {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Limita a 4 líneas para mantener uniformidad */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------------------------------- */
+/* ESTADOS (LOADING/ERROR) */
+/* ---------------------------------- */
+.message {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.1rem;
+  color: #94a3b8;
+}
+
+.error-msg {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(248, 113, 113, 0.2);
+}
+
+/* Barra de carga animada */
+.loading-bar {
+  height: 4px;
+  width: 200px;
+  background: #1e293b;
+  border-radius: 10px;
+  margin: 20px auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-bar::before {
+  content: "";
+  position: absolute;
+  width: 40%;
+  height: 100%;
+  background: #fcd34d;
+  animation: loading-slide 1.2s infinite ease-in-out;
+}
+
+@keyframes loading-slide {
+  0% { left: -40%; }
+  100% { left: 100%; }
+}
+
+/* ---------------------------------- */
+/* ANIMACIONES DE ENTRADA */
+/* ---------------------------------- */
+.slide-in {
+  animation: slideInUp 0.5s ease-out forwards;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------------------------------- */
+/* RESPONSIVIDAD */
+/* ---------------------------------- */
+@media (max-width: 768px) {
+  .main {
+    padding: 20px 15px;
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .category-tabs {
+    gap: 8px;
+  }
+
+  .tab-btn {
+    flex: 1 1 100%; /* Botones de ancho completo en móvil muy pequeño */
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr; /* Una columna en móviles */
+    gap: 20px;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+}
