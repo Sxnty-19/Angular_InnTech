@@ -212,34 +212,84 @@ tbody tr:hover { background: #253347; }
 .status-inactive { background: var(--color-danger); color: white; }
 
 /* ---------------------------------- */
-/* NOTIFICACIÓN FLOTANTE              */
+/* SISTEMA DE NOTIFICACIONES (TOAST)  */
 /* ---------------------------------- */
-.floating-notification {
+.message-modal {
   position: fixed;
-  top: 90px; /* Ajustado para que no lo tape el navbar */
+  top: 100px; /* Debajo del Navbar */
   right: 20px;
-  padding: 15px 25px;
-  border-radius: 8px;
-  font-weight: 600;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-  min-width: 280px;
-  z-index: 2000;
+  z-index: 9999;
+  pointer-events: none; /* No interfiere con clics */
+}
+
+.message-content {
+  min-width: 300px;
+  max-width: 400px;
+  padding: 16px 24px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  animation: slideInRight 0.4s ease-out forwards;
-}
-
-.floating-notification.success {
-  background: var(--color-success);
+  gap: 15px;
+  background: var(--color-dark); /* Fondo oscuro por defecto */
   color: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  border-left: 5px solid var(--color-neutral);
+  pointer-events: auto; /* El toast en sí se puede tocar si fuera necesario */
 }
 
-.floating-notification.error {
-  background: var(--color-danger);
-  color: white;
+/* Estado de Éxito */
+.message-content.success {
+  border-left-color: #10b981; /* Verde brillante */
+  background: #064e3b; /* Fondo verde oscuro traslúcido o sólido */
 }
 
+/* Estado de Error */
+.message-content.error {
+  border-left-color: #ef4444; /* Rojo brillante */
+  background: #7f1d1d; /* Fondo rojo oscuro */
+}
+
+.message-content i {
+  font-size: 1.5rem;
+}
+
+.message-content p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Animación de entrada estilo "Fly" */
+.slide-in-msg {
+  animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------- */
+/* AJUSTE PARA MÓVILES                */
+/* ---------------------------------- */
+@media (max-width: 768px) {
+  .message-modal {
+    top: 20px;
+    left: 20px;
+    right: 20px;
+  }
+  
+  .message-content {
+    min-width: auto;
+    width: 100%;
+  }
+}
 /* ---------------------------------- */
 /* ANIMACIONES (REEMPLAZO DE FLY)     */
 /* ---------------------------------- */

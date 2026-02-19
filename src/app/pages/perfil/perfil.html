@@ -125,8 +125,15 @@
 
 @if (notification().show) {
   <div class="message-modal slide-in-msg">
-    <div class="message-content" [class.success]="notification().type === 'success'">
-      <i class="fas" [class.fa-check-circle]="notification().type === 'success'" [class.fa-times-circle]="notification().type === 'error'"></i>
+    <div class="message-content" 
+         [class.success]="notification().type === 'success'"
+         [class.error]="notification().type === 'error'">
+      
+      <i class="fas" 
+         [class.fa-check-circle]="notification().type === 'success'" 
+         [class.fa-times-circle]="notification().type === 'error'">
+      </i>
+      
       <p>{{notification().text}}</p>
     </div>
   </div>

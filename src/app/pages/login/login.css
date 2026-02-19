@@ -1,298 +1,298 @@
- /* Clase auxiliar para el spinner de carga */
-    .text-secondary {
-        color: var(--color-secondary);
-    }
+/* ---------------------------------- */
+/* 1. VARIABLES Y RESET LOCAL         */
+/* ---------------------------------- */
+:host {
+  --color-dark: #0f172a;           /* Azul muy oscuro (Cards) */
+  --color-body-bg: #1a202c;        /* Gris oscuro (Fondo) */
+  --color-primary: #1e3a8a;        /* Azul institucional */
+  --color-secondary: #fcd34d;      /* Amarillo/Dorado (Acentos) */
+  --color-text: #e2e8f0;           /* Texto claro */
+  --color-error: #ef4444;          /* Rojo */
+  --color-success: #10b981;        /* Verde */
+  --color-neutral: #94a3b8;        /* Gris neutro */
 
-    .form-section {
-        width: 100%;
-        min-height: 100vh;
-        /* Fondo con gradiente elegante usando los colores dark */
-        background: radial-gradient(
-            circle at center,
-            var(--color-dark) 0%,
-            #000000 100%
-        );
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: var(--color-text);
-        font-family: "Inter", sans-serif;
-        padding: 20px;
-    }
+  display: block;
+  font-family: "Inter", sans-serif;
+}
 
-    .form-card {
-        background: var(--color-card);
-        padding: 40px;
-        border-radius: 12px;
-        width: 100%;
-        max-width: 400px;
-        text-align: center;
-        /* Borde y sombra destacados */
-        border: 2px solid var(--color-primary);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-        transition: transform 0.3s ease-in-out;
-        position: relative; /* CRUCIAL para que el overlay de carga se posicione correctamente */
-    }
+/* ---------------------------------- */
+/* 2. ESTRUCTURA DE LA SECCIÓN        */
+/* ---------------------------------- */
+.form-section {
+  width: 100%;
+  min-height: 100vh;
+  /* Gradiente radial profundo para dar enfoque al centro */
+  background: radial-gradient(
+    circle at center,
+    var(--color-dark) 0%,
+    #000000 100%
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
 
-    .form-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
-    }
+.form-card {
+  background: var(--color-dark);
+  padding: 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  border: 1px solid #334155; /* Borde sutil */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  position: relative;
+  overflow: hidden;
+}
 
-    h1 {
-        margin-bottom: 5px; /* Ajustado para el slogan */
-        color: var(--color-secondary);
-        font-size: 2rem;
-        font-weight: 800;
-    }
+/* ---------------------------------- */
+/* 3. TIPOGRAFÍA Y ENCABEZADOS        */
+/* ---------------------------------- */
+h1 {
+  margin-bottom: 8px;
+  color: var(--color-secondary);
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
 
-    /* ESTILO SLOGAN */
-    .slogan {
-        color: var(--color-link-default);
-        margin-bottom: 30px;
-        font-size: 0.95rem;
-    }
+.slogan {
+  color: var(--color-neutral);
+  margin-bottom: 35px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
 
-    /* OVERLAY DE CARGA CENTRALIZADO */
-    .loading-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(31, 41, 55, 0.9); /* color-card con transparencia */
-        border-radius: 12px;
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: opacity 0.3s ease;
-    }
+/* ---------------------------------- */
+/* 4. ELEMENTOS DEL FORMULARIO        */
+/* ---------------------------------- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 22px;
+  text-align: left;
+}
 
-    .loading-overlay p {
-        margin-top: 15px;
-        font-weight: 600;
-        color: var(--color-text);
-    }
-    /* FIN OVERLAY */
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--color-text);
+  font-size: 0.9rem;
+}
 
-    /* Campos de formulario */
-    .form-group {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 20px;
-        text-align: left;
-    }
+/* Inputs con el estilo de 'Perfil' */
+.input-field {
+  width: 100%;
+  padding: 13px 15px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  background: #1a202c; /* Fondo más claro que la card */
+  color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-    .form-group label {
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: var(--color-text);
-        font-size: 0.9rem;
-    }
+.input-field:focus {
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px rgba(252, 211, 77, 0.15);
+  outline: none;
+  background: #1e293b;
+}
 
-    /* Contenedor del campo de contraseña para el icono de ojo */
-    .password-wrapper {
-        position: relative;
-        display: flex;
-        align-items: center;
-    }
+.input-field::placeholder {
+  color: #64748b;
+}
 
-    .password-wrapper input {
-        width: 100%;
-        padding-right: 40px; /* Espacio para el botón de alternar */
-    }
+/* Contenedor Contraseña */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
-    input {
-        padding: 12px;
-        border-radius: 8px;
-        border: 1px solid #444;
-        background: #374151; /* Ligeramente más claro que la tarjeta */
-        color: white;
-        transition:
-            border-color 0.3s,
-            box-shadow 0.3s;
-    }
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--color-neutral);
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 5px;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+}
 
-    input:focus {
-        border-color: var(--color-secondary);
-        box-shadow: 0 0 0 3px rgba(252, 211, 77, 0.3); /* Sombra de foco color naranja */
-        outline: none;
-    }
+.toggle-password:hover {
+  color: var(--color-secondary);
+}
 
-    input:disabled {
-        cursor: not-allowed;
-    }
+/* ---------------------------------- */
+/* 5. BOTONES Y LINKS                 */
+/* ---------------------------------- */
+.btn-login {
+  width: 100%;
+  padding: 15px;
+  margin-top: 15px;
+  background: var(--color-secondary);
+  border: none;
+  border-radius: 8px;
+  color: var(--color-dark);
+  font-weight: 800;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(252, 211, 77, 0.2);
+}
 
-    input::placeholder {
-        color: #9ca3af;
-    }
+.btn-login:hover:not(:disabled) {
+  background: #fde68a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(252, 211, 77, 0.3);
+}
 
-    /* Botón para mostrar/ocultar contraseña */
-    .toggle-password {
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        background: none;
-        border: none;
-        padding: 0 10px;
-        cursor: pointer;
-        color: var(--color-link-default);
-        transition: color 0.2s;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        margin-right: 5px;
-    }
+.btn-login:disabled {
+  background: #475569;
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
 
-    .toggle-password:hover {
-        color: var(--color-secondary);
-    }
+.links {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
-    /* Botón Principal */
-    .btn-login {
-        width: 100%;
-        padding: 14px 0;
-        margin-top: 20px;
-        background: var(--color-secondary);
-        border: none;
-        border-radius: 8px;
-        color: var(--color-dark);
-        font-weight: 700;
-        font-size: 1.1rem;
-        cursor: pointer;
-        transition:
-            background 0.3s,
-            transform 0.2s,
-            box-shadow 0.3s;
-        box-shadow: 0 4px 10px rgba(252, 211, 77, 0.4);
-    }
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--color-neutral);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+  text-decoration: none;
+  padding: 4px;
+}
 
-    /* Estilo para botón deshabilitado */
-    .btn-login:disabled {
-        background: #9ca3af; /* Gris tenue */
-        cursor: not-allowed;
-        transform: none;
-        box-shadow: none;
-    }
+.link-btn:hover {
+  color: var(--color-secondary);
+}
 
-    .btn-login:hover:not(:disabled) {
-        background: #fbdc6f; /* Tono más claro */
-        transform: translateY(-1px);
-        box-shadow: 0 6px 15px rgba(252, 211, 77, 0.5);
-    }
+.highlight-yellow {
+  color: var(--color-secondary);
+  font-weight: 700;
+}
 
-    /* Errores en línea */
-    .inline-error {
-        color: var(--color-error);
-        background: rgba(239, 68, 68, 0.1);
-        border: 1px solid var(--color-error);
-        padding: 10px;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        margin-bottom: 20px;
-    }
+.password-forgot {
+  align-self: flex-end;
+  font-size: 0.8rem;
+  margin-top: 6px;
+}
 
-    /* Enlaces Secundarios (Registrarse / Volver) */
-    .links {
-        margin-top: 20px;
-        display: flex;
-        flex-direction: column; /* Apilados para mejor diseño en móvil/card */
-        gap: 10px;
-    }
+/* ---------------------------------- */
+/* 6. ESTADOS DE CARGA Y ERRORES      */
+/* ---------------------------------- */
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-    .password-forgot {
-        /* Mueve el botón de "Olvidé mi contraseña" a la derecha, debajo del campo */
-        align-self: flex-end;
-        margin-top: 5px;
-        font-size: 0.8rem;
-    }
+.text-secondary { color: var(--color-secondary); }
 
-    .link-btn {
-        background: none;
-        border: none;
-        color: var(--color-link-default);
-        cursor: pointer;
-        font-size: 0.9rem;
-        transition: color 0.2s;
-        text-decoration: none;
-        padding: 5px;
-        display: block;
-    }
+.inline-error {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
 
-    .link-btn:hover {
-        color: var(--color-secondary);
-    }
+/* ---------------------------------- */
+/* 7. NOTIFICACIÓN TOAST (UNIFICADA)  */
+/* ---------------------------------- */
+.message-modal {
+  position: fixed;
+  top: 40px;
+  right: 20px;
+  z-index: 9999;
+}
 
-    .link-back {
-        color: var(--color-primary);
-        font-size: 0.95rem; /* Hacemos este un poco más grande para destacarlo */
-    }
-    .link-back:hover {
-        color: var(--color-secondary);
-    }
+.message-content {
+  min-width: 280px;
+  padding: 16px 22px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-dark);
+  color: white;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+  border-left: 5px solid var(--color-neutral);
+}
 
-    /* ---------------------------------- */
-    /* ESTILOS DEL MENSAJE PERSONALIZADO (REEMPLAZO DE ALERT) */
-    /* ---------------------------------- */
-    .message-modal {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
-        animation: slideIn 0.5s forwards;
-    }
+.message-content.success {
+  border-left-color: var(--color-success);
+  background: #064e3b;
+}
 
-    .message-content {
-        padding: 15px 25px;
-        border-radius: 8px;
-        color: white;
-        background-color: var(--color-error);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        font-weight: 600;
-        animation: bounce 0.5s ease-out; /* Animación de rebote al aparecer */
-    }
+.message-content.error {
+  border-left-color: var(--color-error);
+  background: #7f1d1d;
+}
 
-    .message-content.success {
-        background-color: var(--color-success);
-    }
+/* ---------------------------------- */
+/* 8. ANIMACIONES                     */
+/* ---------------------------------- */
+.slide-in {
+  animation: slideInUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
 
-    .message-content i {
-        font-size: 1.2rem;
-    }
+.slide-in-msg {
+  animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
 
-    @keyframes slideIn {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
+@keyframes slideInUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
 
-    /* Animación de rebote para el modal */
-    @keyframes bounce {
-        0%,
-        100% {
-            transform: translateY(0);
-        }
-        20% {
-            transform: translateY(-5px);
-        }
-        40% {
-            transform: translateY(0);
-        }
-        60% {
-            transform: translateY(-2px);
-        }
-        80% {
-            transform: translateY(0);
-        }
-    }
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* ---------------------------------- */
+/* 9. RESPONSIVIDAD                   */
+/* ---------------------------------- */
+@media (max-width: 480px) {
+  .form-card {
+    padding: 30px 20px;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+  }
+  
+  h1 { font-size: 1.8rem; }
+  
+  .message-modal {
+    top: 20px;
+    left: 20px;
+    right: 20px;
+  }
+}

@@ -31,4 +31,6 @@ app-root {
     --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.05);
     --shadow-lift: 0 10px 25px rgba(0, 0, 0, 0.1);
     --color-danger: red;
+    --color-error: #ef4444; /* Rojo */
+    --color-success: #10b981; /* Verde */
 }

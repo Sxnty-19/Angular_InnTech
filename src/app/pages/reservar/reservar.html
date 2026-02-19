@@ -113,15 +113,13 @@
   </div>
 }
 
-@if (isConfirmingCancel()) {
-  <div class="modal-backdrop">
-    <div class="modal-content">
-      <h3>¿Cancelar Reserva?</h3>
-      <p>Confirmas la cancelación de la reserva #{{reservationToCancel()?.id_reserva}}</p>
-      <div class="modal-actions">
-        <button class="btn-danger" (click)="ejecutarCancelacion()">Sí, Cancelar</button>
-        <button class="btn-cancel" (click)="isConfirmingCancel.set(false)">No</button>
-      </div>
+@if (notification().show) {
+  <div class="message-modal">
+    <div class="message-content" 
+         [class.success]="notification().isSuccess"
+         [class.error]="!notification().isSuccess"> <i class="fas" [class.fa-check-circle]="notification().isSuccess" [class.fa-times-circle]="!notification().isSuccess"></i>
+      <p>{{notification().msg}}</p>
     </div>
   </div>
+
 }<app-footer></app-footer>

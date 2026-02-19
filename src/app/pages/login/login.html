@@ -1,5 +1,5 @@
 <section class="form-section">
-  <div class="form-card">
+  <div class="form-card slide-in">
     @if (isLoading()) {
       <div class="loading-overlay">
         <i class="fas fa-spinner fa-spin fa-3x text-secondary"></i>
@@ -20,14 +20,16 @@
       
       <div class="form-group">
         <label for="username">Usuario</label>
-        <input id="username" name="username" type="text" placeholder="Tu nombre de usuario"
+        <input id="username" name="username" type="text" class="input-field" 
+               placeholder="Tu nombre de usuario"
                [(ngModel)]="username" required [disabled]="isLoading()">
       </div>
 
       <div class="form-group">
         <label for="password">Contraseña</label>
         <div class="password-wrapper">
-          <input id="password" name="password" [type]="passwordVisible() ? 'text' : 'password'"
+          <input id="password" name="password" class="input-field"
+                 [type]="passwordVisible() ? 'text' : 'password'"
                  placeholder="Tu contraseña secreta" [(ngModel)]="password" required [disabled]="isLoading()">
           
           <button type="button" class="toggle-password" (click)="togglePasswordVisibility()" [disabled]="isLoading()">
@@ -40,13 +42,13 @@
         </button>
       </div>
 
-      <button type="submit" class="btn-login" [disabled]="isLoading()">
+      <button type="submit" class="btn btn-primary btn-login" [disabled]="isLoading()">
         Ingresar
       </button>
 
       <div class="links">
         <button type="button" class="link-btn" routerLink="/register" [disabled]="isLoading()">
-          ¿No tienes cuenta? Regístrate
+          ¿No tienes cuenta? <span class="highlight-yellow">Regístrate</span>
         </button>
         <button type="button" class="link-btn link-back" routerLink="/" [disabled]="isLoading()">
           ← Volver al Inicio
@@ -56,8 +58,10 @@
   </div>
 
   @if (showMessage()) {
-    <div class="message-modal">
-      <div class="message-content" [class.success]="isSuccess()">
+    <div class="message-modal slide-in-msg">
+      <div class="message-content" 
+           [class.success]="isSuccess()" 
+           [class.error]="!isSuccess()">
         <i class="fas" [class.fa-check-circle]="isSuccess()" [class.fa-times-circle]="!isSuccess()"></i>
         <p>{{ message() }}</p>
       </div>
