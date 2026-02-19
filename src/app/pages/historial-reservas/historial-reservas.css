@@ -1,12 +1,12 @@
 :host {
   display: block;
-  background-color: var(color-dark); /* Asegura fondo sólido */
+  background-color: var(--color-dark); /* Asegura fondo sólido */
 }
 
 .main {
   min-height: calc(100vh - 160px);
   padding: 60px 20px;
-  background: var(--color-dark);
+  background: #1a202c;
   color: #e5e7eb;
 }
 

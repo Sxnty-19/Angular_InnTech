@@ -1,6 +1,8 @@
+
+ 
  /* Contenedor principal */
   .main-container {
-    background: var(--color-bg-primary);
+    background: #1a202c;
     min-height: calc(100vh - 160px);
     padding: 40px 20px;
   }
@@ -117,7 +119,7 @@
   /* Tarjetas (Cards) */
   .card {
     /* Usa la nueva variable de fondo de caja, ya que la tarjeta principal ahora es el contenido de la pestaña */
-    background: var(--color-bg-box);
+    background: var(--color-dark);
     padding: 30px;
     margin-bottom: 35px;
     border-radius: 16px;

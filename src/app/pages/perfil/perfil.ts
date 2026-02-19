@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Navbar } from "../../components/navbar/navbar";
@@ -16,91 +16,101 @@ export class PerfilComponent implements OnInit {
   // Control de vista activa
   currentView = signal<'personales' | 'registro' | 'documentos'>('personales');
 
-  // Datos de Usuario (Signals para binding reactivo)
-  user: any = null;
+  // Datos del Usuario (Signals)
+  user = signal<any>(null);
   primer_nombre = signal('');
   segundo_nombre = signal('');
   primer_apellido = signal('');
   segundo_apellido = signal('');
   telefono = signal('');
 
-  // Formulario de Documentos
+  // Formulario de Documento
   tiposDoc = signal<any[]>([]);
   id_tdocumento = signal('');
   numero_documento = signal('');
   lugar_expedicion = signal('');
   estado_doc = signal(1);
 
-  // Lista de documentos del usuario
+  // Lista de documentos existentes
   documentos = signal<any[]>([]);
 
-  // Notificaciones
-  notificationText = signal('');
-  notificationType = signal<'success' | 'error' | ''>('');
+  // Notificación
+  notification = signal<{ text: string, type: 'success' | 'error' | '', show: boolean }>({
+    text: '', type: '', show: false
+  });
 
-  ngOnInit() {
-    const stored = localStorage.getItem('user');
+  private readonly API_BASE = 'https://inntech-backend.onrender.com';
+
+  async ngOnInit() {
+    const stored = localStorage.getItem("user");
     if (stored) {
-      this.user = JSON.parse(stored);
-      // Poblar señales con datos del usuario
-      this.primer_nombre.set(this.user.primer_nombre);
-      this.segundo_nombre.set(this.user.segundo_nombre || '');
-      this.primer_apellido.set(this.user.primer_apellido);
-      this.segundo_apellido.set(this.user.segundo_apellido || '');
-      this.telefono.set(this.user.telefono);
+      const userData = JSON.parse(stored);
+      this.user.set(userData);
+      
+      // Mapear datos a signals individuales para el binding
+      this.primer_nombre.set(userData.primer_nombre || '');
+      this.segundo_nombre.set(userData.segundo_nombre || '');
+      this.primer_apellido.set(userData.primer_apellido || '');
+      this.segundo_apellido.set(userData.segundo_apellido || '');
+      this.telefono.set(userData.telefono || '');
 
-      this.cargarTiposDoc();
-      this.cargarDocumentos();
+      await this.cargarTiposDoc();
+      await this.cargarDocumentos();
     }
   }
 
   showNotification(text: string, type: 'success' | 'error') {
-    this.notificationText.set(text);
-    this.notificationType.set(type);
+    this.notification.set({ text, type, show: true });
     setTimeout(() => {
-      this.notificationText.set('');
-      this.notificationType.set('');
+      this.notification.update(n => ({ ...n, show: false }));
     }, 3000);
   }
 
   async cargarTiposDoc() {
-    const res = await fetch("https://inntech-backend.onrender.com/tipos_documento/get_tipos_documento");
-    const data = await res.json();
-    if (res.ok) this.tiposDoc.set(data.data);
+    try {
+      const res = await fetch(`${this.API_BASE}/tipos_documento/get_tipos_documento`);
+      const data = await res.json();
+      if (res.ok) this.tiposDoc.set(data.data);
+    } catch (e) { console.error(e); }
   }
 
   async cargarDocumentos() {
-    const res = await fetch("https://inntech-backend.onrender.com/documentos/get_documentos_completo");
-    const data = await res.json();
-    if (res.ok && this.user) {
-      this.documentos.set(data.data.filter((d: any) => d.id_usuario === this.user.id_usuario));
-    }
+    try {
+      const res = await fetch(`${this.API_BASE}/documentos/get_documentos_completo`);
+      const data = await res.json();
+      if (res.ok && this.user()) {
+        const filtrados = data.data.filter((d: any) => d.id_usuario === this.user().id_usuario);
+        this.documentos.set(filtrados);
+      }
+    } catch (e) { console.error(e); }
   }
 
   async actualizarUsuario() {
-    const payload = {
-      primer_nombre: this.primer_nombre(),
-      segundo_nombre: this.segundo_nombre(),
-      primer_apellido: this.primer_apellido(),
-      segundo_apellido: this.segundo_apellido(),
-      telefono: this.telefono()
-    };
-
     try {
-      const res = await fetch(`https://inntech-backend.onrender.com/usuarios/update_usuario/${this.user.id_usuario}`, {
+      const payload = {
+        primer_nombre: this.primer_nombre(),
+        segundo_nombre: this.segundo_nombre(),
+        primer_apellido: this.primer_apellido(),
+        segundo_apellido: this.segundo_apellido(),
+        telefono: this.telefono(),
+      };
+
+      const res = await fetch(`${this.API_BASE}/usuarios/update_usuario/${this.user().id_usuario}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
-      if (res.ok) {
-        this.showNotification("Datos actualizados correctamente", "success");
-        const updatedUser = { ...this.user, ...payload };
-        localStorage.setItem("user", JSON.stringify(updatedUser));
-        this.user = updatedUser;
-      } else {
-        this.showNotification("Error al actualizar", "error");
+      const data = await res.json();
+      if (!res.ok) {
+        this.showNotification(data.detail || "Error al actualizar", "error");
+        return;
       }
+
+      this.showNotification("Datos actualizados correctamente", "success");
+      const updatedUser = { ...this.user(), ...payload };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      this.user.set(updatedUser);
     } catch (e) {
       this.showNotification("Error de conexión", "error");
     }
@@ -108,31 +118,35 @@ export class PerfilComponent implements OnInit {
 
   async crearDocumento() {
     if (!this.id_tdocumento() || !this.numero_documento() || !this.lugar_expedicion()) {
-      this.showNotification("Campos obligatorios faltantes", "error");
+      this.showNotification("Campos obligatorios incompletos", "error");
       return;
     }
 
-    const payload = {
-      id_tdocumento: Number(this.id_tdocumento()),
-      id_usuario: this.user.id_usuario,
-      numero_documento: this.numero_documento(),
-      lugar_expedicion: this.lugar_expedicion(),
-      estado: this.estado_doc()
-    };
-
     try {
-      const res = await fetch("https://inntech-backend.onrender.com/documentos/create_documento", {
+      const payload = {
+        id_tdocumento: Number(this.id_tdocumento()),
+        id_usuario: this.user().id_usuario,
+        numero_documento: this.numero_documento(),
+        lugar_expedicion: this.lugar_expedicion(),
+        estado: this.estado_doc(),
+      };
+
+      const res = await fetch(`${this.API_BASE}/documentos/create_documento`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
-      if (res.ok) {
-        this.showNotification("Documento registrado", "success");
-        this.numero_documento.set('');
-        this.lugar_expedicion.set('');
-        this.cargarDocumentos();
+      if (!res.ok) {
+        const data = await res.json();
+        this.showNotification(data.detail || "Error al crear documento", "error");
+        return;
       }
+
+      this.showNotification("Documento registrado", "success");
+      this.numero_documento.set('');
+      this.lugar_expedicion.set('');
+      await this.cargarDocumentos();
     } catch (e) {
       this.showNotification("Error de conexión", "error");
     }
