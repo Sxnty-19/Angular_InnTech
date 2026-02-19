@@ -9,7 +9,7 @@ body {
   height: 100%;
   margin: 0;
   width: 100%;
-  overflow-x: hidden; /* evita que algo se salga */
+  overflow-x: hidden;
   font-family: system-ui, sans-serif;
 }
 
@@ -18,8 +18,6 @@ app-root {
   flex-direction: column;
   min-height: 100vh;
 }
-
-/* ... lo que ya tienes ... */
 
 :root {
     --color-primary: #1e3a8a;
@@ -32,4 +30,5 @@ app-root {
     --color-medium-gray: #4b5563;
     --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.05);
     --shadow-lift: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --color-danger: red;
 }

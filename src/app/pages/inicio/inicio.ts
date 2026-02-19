@@ -1,7 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Footer } from '../../components/footer/footer'; // Ajusta la ruta si es necesario
+import { Footer } from '../../components/footer/footer';
+
+interface Habitacion {
+  nombre: string;
+  descripcion: string;
+  imagen: string;
+}
+
 @Component({
   selector: 'app-inicio',
   standalone: true,
@@ -10,31 +17,31 @@ import { Footer } from '../../components/footer/footer'; // Ajusta la ruta si es
   styleUrls: ['./inicio.css']
 })
 export class Inicio {
-  habitaciones = [
+  habitaciones: Habitacion[] = [
     {
       nombre: "Habitación Sencilla",
       descripcion: "Diseñada para el viajero solitario, ofrece comodidad y privacidad con una cama individual grande.",
-      imagen: "/habitaciones/sencilla.png",
+      imagen: "habitaciones/sencilla.png",
     },
     {
       nombre: "Habitación Doble",
       descripcion: "Perfecta para parejas o dos amigos. Disponible con una cama doble grande o dos camas individuales.",
-      imagen: "/habitaciones/doble.png",
+      imagen: "habitaciones/doble.png",
     },
     {
       nombre: "Habitación Múltiple",
       descripcion: "Ideal para grupos pequeños o familias. Ofrece tres o cuatro camas individuales cómodas.",
-      imagen: "/habitaciones/multiple.png",
+      imagen: "habitaciones/multiple.png",
     },
     {
       nombre: "Habitación Quíntuple",
       descripcion: "Gran espacio con cinco camas, pensada para equipos deportivos o grandes grupos de amigos.",
-      imagen: "/habitaciones/quintuple.png",
+      imagen: "habitaciones/quintuple.png",
     },
     {
       nombre: "Habitación Séxtuple",
       descripcion: "Nuestra opción más espaciosa, con seis camas. Máxima capacidad y excelente para delegaciones.",
-      imagen: "/habitaciones/sextuple.png",
+      imagen: "habitaciones/sextuple.png",
     },
   ];
 }

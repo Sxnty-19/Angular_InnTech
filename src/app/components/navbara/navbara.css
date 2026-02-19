@@ -3,7 +3,7 @@
     /* ---------------------------------- */
     .mod-nav {
         width: 100%;
-        background: var(--color-mid-dark);
+        background: var(--color-dark);
         padding: 8px 40px;
         display: flex;
         align-items: center;

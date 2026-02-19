@@ -1,59 +1,59 @@
 <nav class="navbar">
-    <div class="logo">
-        <img src="logo.png" alt="Logo de Hospedaje Santandereano del Sur" />
-        <a routerLink="/" class="site-title">Hospedaje Santandereano del Sur</a>
-    </div>
-
-    <ul class="menu">
-        <li><a routerLink="/" class="nav-link">Inicio</a></li>
-        <li><a routerLink="/login" class="btn btn-outline">Iniciar Sesión</a></li>
-    </ul>
+  <div class="logo">
+    <img src="logo.png" alt="Logo">
+    <a routerLink="/" class="site-title">Hospedaje Santandereano del Sur</a>
+  </div>
+  <ul class="menu">
+    <li><a routerLink="/login" class="btn btn-outline">Iniciar Sesión</a></li>
+  </ul>
 </nav>
 
 <section class="hero">
-    <div class="content">
-        <img src="logo.png" alt="Logo del Hotel" class="hero-logo" />
-        <h1>Bienvenido al Hospedaje Santandereano del Sur</h1>
-        <p>Descubre el espacio perfecto para tu estancia en Santandereano del Sur.</p>
-    </div>
+  <div class="content">
+    <img src="logo.png" alt="Logo del Hotel" class="hero-logo" />
+    <h1>Bienvenido al Hospedaje Santandereano del Sur</h1>
+    <p>Descubre el espacio perfecto para tu estancia en Santandereano del Sur.</p>
+  </div>
 </section>
 
 <section class="rooms">
-    <div class="container">
-        <h2 class="section-title">Nuestras Habitaciones</h2>
-        <p class="section-subtitle">Descubre el espacio perfecto para tu estancia en Santandereano del Sur.</p>
+  <div class="container">
+    <h2 class="section-title">Nuestras Habitaciones</h2>
+    <p class="section-subtitle">Calidad y confort para cada tipo de viajero.</p>
 
-        <div class="room-grid">
-            @for (room of habitaciones; track room.nombre) {
-                <div class="room-card">
-                    <div class="room-image-placeholder">
-                        <img [src]="room.imagen" [alt]="'Habitación ' + room.nombre" class="room-image" />
-                    </div>
-                    <div class="card-content">
-                        <h3>{{ room.nombre }}</h3>
-                        <p>{{ room.descripcion }}</p>
-                    </div>
-                </div>
-            }
+    <div class="room-grid">
+      @for (room of habitaciones; track room.nombre) {
+        <div class="room-card">
+          <div class="room-image-placeholder">
+            <img [src]="room.imagen" [alt]="room.nombre" class="room-image" />
+          </div>
+          <div class="card-content">
+            <h3>{{ room.nombre }}</h3>
+            <p>{{ room.descripcion }}</p>
+          </div>
         </div>
+      }
     </div>
+  </div>
 </section>
 
 <section class="about">
-    <div class="container about-grid">
-        <div class="about-content">
-            <h2 class="section-title about-title">Nuestra Historia y Misión</h2>
-            <p class="lead-text">
-                En Hospedaje Santandereano del Sur, nuestra misión es ofrecer un refugio de paz y comodidad, combinado con la eficiencia de la tecnología moderna.
-            </p>
-            <p class="historia">
-                Fundado en el corazón de Santander, hemos crecido manteniendo la calidez de la hospitalidad tradicional colombiana...
-            </p>
-        </div>
-        <div class="about-image">
-            <img src="portada/sobreNosotros.png" alt="Vista frontal" class="hotel-img" />
-        </div>
+  <div class="container about-grid">
+    <div class="about-content">
+      <h2 class="section-title about-title">Nuestra Historia y Misión</h2>
+      <p class="lead-text">
+        Ofrecemos un refugio de paz combinado con la eficiencia moderna.
+      </p>
+      <p>
+        Fundado en el corazón de Santander, mantenemos la calidez de la hospitalidad tradicional colombiana.
+      </p>
+      <p>
+        Usamos tecnología para personalizar su estancia, haciéndola memorable desde su llegada.
+      </p>
     </div>
+    <div class="about-image">
+      <img src="portada/sobreNosotros.png" alt="Sobre nosotros" class="hotel-img" />
+    </div>
+  </div>
 </section>
-
 <app-footer></app-footer>

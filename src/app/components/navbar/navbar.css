@@ -1,60 +1,228 @@
-nav.navbar {
-    background: #0f172a;
-    color: #e2e8f0;
-    padding: 12px 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
+/* ---------------------------------- */
+  /* NAVBAR PRINCIPAL */
+  /* ---------------------------------- */
+  .navbar {
+    box-sizing: border-box;
     width: 100%;
+    background: var(--color-dark);
+    padding: 15px 40px; /* Aumento del padding para más espacio */
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow-subtle);
+    position: sticky; /* Se mantiene visible al hacer scroll */
     top: 0;
-    z-index: 100;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-}
+    z-index: 50;
+    font-family: "Inter", sans-serif;
+  }
 
-.logo {
+  /* FIX GLOBAL PARA ELIMINAR EL SCROLL HORIZONTAL */
+  /* Esto ya debería estar en el contenedor principal de la página, pero lo incluimos por seguridad si se usa este componente como principal */
+  :global(html),
+  :global(body) {
+    overflow-x: hidden;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Ocultar texto móvil por defecto */
+  .mobile-text {
+    display: none;
+  }
+
+  /* ---------------------------------- */
+  /* IZQUIERDA: LOGO Y MARCA */
+  /* ---------------------------------- */
+  .nav-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
     cursor: pointer;
-}
+    transition: opacity 0.3s;
+    /* FIX CLAVE: Permitir que el nav-left ocupe el espacio restante sin forzar el desborde */
+    flex-grow: 1;
+    /* Asegura que el contenido (incluyendo la marca) se pueda comprimir */
+    min-width: 0;
+  }
 
-.logo img {
-    width: 50px;
-    height: 50px;
-    transition: transform 0.3s ease;
-}
+  .nav-left:hover {
+    opacity: 0.9;
+  }
 
-.logo:hover img {
-    transform: scale(1.05) rotate(-2deg);
-}
+  /* Mejora de accesibilidad para focus */
+  .clickable {
+    border-radius: 4px;
+  }
+  .clickable:focus {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 4px;
+  }
 
-.site-title {
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: white;
-    text-decoration: none;
-}
+  .logo {
+    width: 35px;
+    height: 35px;
+    flex-shrink: 0; /* El logo NUNCA se encoge */
+  }
 
-.menu {
-    list-style: none;
+  .brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-secondary);
+    transition: color 0.3s ease;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
+    /* FIX CLAVE para PC/Desktop: Truncar el texto si es necesario */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Permite que el elemento se encoja si es necesario para dar espacio a los botones */
+    min-width: 0;
+  }
+
+  /* ---------------------------------- */
+  /* DERECHA: USUARIO Y BOTONES */
+  /* ---------------------------------- */
+  .nav-right {
     display: flex;
     align-items: center;
-    gap: 30px;
-}
+    gap: 20px;
+    /* FIX CLAVE: Asegura que el nav-right tenga prioridad y NUNCA se encoja */
+    flex-shrink: 0;
+  }
 
-.nav-link {
-    color: #e2e8f0;
-    text-decoration: none;
-}
-
-.btn {
-    padding: 9px 18px;
-    border-radius: 9999px;
+  .user-name {
     font-weight: 600;
-}
+    color: var(--color-text);
+    font-size: 0.95rem;
+    padding: 5px 0;
+    /* Resaltar el nombre con una línea de división */
+    border-right: 2px solid var(--color-secondary);
+    padding-right: 20px;
+    margin-right: -5px;
+  }
 
-.btn-outline {
-    border: 2px solid #fcd34d;
-    color: #fcd34d;
-}
+  /* Estilo base para botones */
+  .nav-btn {
+    padding: 8px 16px;
+    border-radius: 9999px; /* Estilo 'pill' */
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: transparent;
+    border: 1px solid var(--color-secondary);
+    color: var(--color-secondary);
+    flex-shrink: 0; /* IMPEDIR que el botón se encoja */
+  }
+
+  .nav-btn:hover {
+    background: var(--color-secondary);
+    color: var(--color-dark);
+    box-shadow: 0 4px 8px rgba(252, 211, 77, 0.3);
+    transform: translateY(-1px);
+  }
+
+  /* Estilo para el botón de 'Cerrar Sesión' (Logout) */
+  .logout {
+    border: 1px solid var(--color-danger);
+    color: var(--color-danger);
+  }
+
+  .logout:hover {
+    background: var(--color-danger);
+    color: white;
+    border-color: var(--color-danger);
+    box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
+  }
+
+  /* Deshabilitar estado */
+  .nav-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* ---------------------------------- */
+  /* RESPONSIVIDAD (Móvil/Tableta) */
+  /* ---------------------------------- */
+  @media (max-width: 768px) {
+    /* Ocultar el texto largo y el nombre completo */
+    .desktop-text,
+    .desktop-only {
+      display: none;
+    }
+    /* Mostrar el texto corto */
+    .mobile-text {
+      display: inline;
+    }
+
+    .navbar {
+      padding: 10px 18px;
+    }
+
+    .brand {
+      font-size: 1.3rem;
+    }
+
+    .nav-right {
+      gap: 4px; /* AJUSTE CLAVE: Reducción MÁXIMA del espacio entre botones (4px) */
+    }
+
+    .user-name {
+      display: none;
+    }
+
+    .nav-btn {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+    }
+  }
+
+  @media (max-width: 420px) {
+    /* Breakpoint para celulares muy pequeños */
+    .navbar {
+      padding: 10px 8px; /* Reducción extrema del padding lateral */
+    }
+
+    .brand {
+      font-size: 0.9rem;
+      font-weight: 700;
+      max-width: 150px;
+    }
+
+    .nav-left {
+      gap: 5px;
+    }
+
+    .logo {
+      width: 25px;
+      height: 25px;
+    }
+
+    .nav-btn {
+      /* AJUSTE MÁS AGRESIVO: Reducción del padding horizontal para reducir el ancho del botón (8px -> 6px) */
+      padding: 6px 6px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    /* FIX FINAL: Para los móviles más pequeños (iPhone SE 1st Gen, etc.) */
+    .brand {
+      /* Ocultamos la marca para darle prioridad total a los botones */
+      display: none;
+    }
+
+    .nav-left {
+      /* Eliminamos el gap si la marca desaparece, solo queda el logo */
+      gap: 0;
+    }
+
+    .navbar {
+      /* AJUSTE MÁS AGRESIVO: Aumentamos el padding lateral para darle más aire al botón de la derecha (6px -> 10px) */
+      padding: 10px 10px;
+    }
+  }

@@ -1,17 +1,28 @@
 <nav class="navbar">
-  <div class="logo">
-  <img src="logo.png" alt="Logo de Hospedaje Santandereano del Sur" />
-    <a routerLink="/" class="site-title">
-      Hospedaje Santandereano del Sur
-    </a>
+  <div
+    class="nav-left clickable"
+    (click)="irPrincipal()"
+    role="button"
+    tabindex="0"
+    (keydown)="handleKeyDown($event)"
+  >
+    <img src="logo.png" alt="Logo de Hotel InnTech" class="logo" />
+    <h1 class="brand">Hotel Santadereano Del Sur</h1>
   </div>
 
-  <ul class="menu">
-    <li><a routerLink="/" class="nav-link">Inicio</a></li>
-    <li>
-      <a routerLink="/login" class="btn btn-outline">
-        Iniciar Sesión
-      </a>
-    </li>
-  </ul>
+  <div class="nav-right">
+    @if (fullName()) {
+      <span class="user-name desktop-only">{{ fullName() }}</span>
+    }
+
+    <button class="nav-btn" (click)="editarPerfil()">
+      <span class="desktop-text">Editar perfil</span>
+      <span class="mobile-text">Perfil</span>
+    </button>
+    
+    <button class="nav-btn logout" (click)="cerrarSesion()">
+      <span class="desktop-text">Cerrar sesión</span>
+      <span class="mobile-text">Salir</span>
+    </button>
+  </div>
 </nav>
