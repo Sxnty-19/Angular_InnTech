@@ -84,11 +84,11 @@ errors = signal<{
   }
 
   // Helpers para actualizar estados parciales del signal de objeto
-  private updateLoading(category: string, value: boolean) {
+  private updateLoading(category: 'eventos' | 'lugares' | 'servicios', value: boolean) {
     this.loading.update(prev => ({ ...prev, [category]: value }));
   }
 
-  private updateError(category: string, value: string | null) {
+  private updateError(category: 'eventos' | 'lugares' | 'servicios', value: string | null) {
     this.errors.update(prev => ({ ...prev, [category]: value }));
   }
 
