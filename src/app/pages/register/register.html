@@ -1,1 +1,75 @@
-<p>register works!</p>
+<section class="form-section">
+  <div class="form-card">
+    @if (isLoading()) {
+      <div class="loading-overlay">
+        <i class="fas fa-spinner fa-spin fa-3x text-secondary"></i>
+        <p>Procesando solicitud...</p>
+      </div>
+    }
+
+    <h1>Registro de Usuario</h1>
+    <p class="slogan">Únete a nuestra plataforma en pocos pasos.</p>
+
+    @if (inlineError()) {
+      <p class="inline-error">{{ inlineError() }}</p>
+    }
+
+    <form (submit)="$event.preventDefault(); handleRegister()">
+      <div class="form-grid" [style.opacity]="isLoading() ? '0.5' : '1'">
+        
+        @for (field of campos; track field.key) {
+          <div class="form-group" [class]="'span-' + field.span">
+            <label [for]="field.key">{{ field.label }}</label>
+
+            @if (field.key === 'password') {
+              <div class="password-wrapper">
+                <input [id]="field.key" [name]="field.key" 
+                       [type]="passwordVisible() ? 'text' : 'password'"
+                       [(ngModel)]="formData()[field.key]" [required]="field.required" 
+                       placeholder="Define tu contraseña">
+                <button type="button" class="toggle-password" (click)="toggleVisibility('pass')">
+                  <i class="fas" [class.fa-eye]="!passwordVisible()" [class.fa-eye-slash]="passwordVisible()"></i>
+                </button>
+              </div>
+            } @else {
+              <input [id]="field.key" [name]="field.key" [type]="field.type || 'text'"
+                     [(ngModel)]="formData()[field.key]" [required]="field.required"
+                     [placeholder]="'Ingresa ' + field.label.toLowerCase()">
+            }
+          </div>
+        }
+
+        <div class="form-group span-6 span-full-mobile">
+          <label for="confirm_password">Confirmar Contraseña</label>
+          <div class="password-wrapper">
+            <input id="confirm_password" name="confirm_password" 
+                   [type]="confirmPasswordVisible() ? 'text' : 'password'"
+                   [(ngModel)]="confirmPassword" required placeholder="Repite tu contraseña">
+            <button type="button" class="toggle-password" (click)="toggleVisibility('confirm')">
+              <i class="fas" [class.fa-eye]="!confirmPasswordVisible()" [class.fa-eye-slash]="confirmPasswordVisible()"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-register" [disabled]="isLoading()">
+        Registrar Cuenta
+      </button>
+
+      <div class="links">
+        <button type="button" class="link-btn" routerLink="/login">
+          ← ¿Ya tienes cuenta? Inicia sesión
+        </button>
+      </div>
+    </form>
+  </div>
+
+  @if (showMessage()) {
+    <div class="message-modal">
+      <div class="message-content" [class.success]="isSuccess()">
+        <i class="fas" [class.fa-check-circle]="isSuccess()" [class.fa-times-circle]="!isSuccess()"></i>
+        <p>{{ message() }}</p>
+      </div>
+    </div>
+  }
+</section>

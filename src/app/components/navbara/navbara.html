@@ -1,0 +1,41 @@
+<nav class="mod-nav">
+    <div class="nav-wrapper">
+        @if (modulos().length > 0 && !isLoading()) {
+            <button
+                class="menu-toggle-btn"
+                (click)="toggleMenu()"
+                [attr.aria-expanded]="isMenuOpen()"
+            >
+                {{ isMenuOpen() ? "✕ Cerrar Módulos" : "☰ Módulos" }}
+            </button>
+        }
+
+        @if (error()) {
+            <p class="error">{{ error() }}</p>
+        } @else if (isLoading()) {
+            <div class="loading-container-bar">
+                <div class="loading-bar"></div>
+            </div>
+        } @else if (modulos().length > 0) {
+            <div
+                class="mod-buttons-container"
+                [class.open]="isMenuOpen()"
+                id="module-list"
+            >
+                <div class="mod-scroll-container">
+                    @for (m of modulos(); track m.ruta) {
+                        <button
+                            class="mod-btn"
+                            (click)="ir(m.ruta)"
+                            [attr.aria-current]="currentPath() === m.ruta ? 'page' : null"
+                        >
+                            {{ m.nombre }}
+                        </button>
+                    }
+                </div>
+            </div>
+        } @else {
+            <p class="empty-message">No hay módulos asignados para tu rol.</p>
+        }
+    </div>
+</nav>
