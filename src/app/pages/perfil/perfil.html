@@ -1,0 +1,100 @@
+<app-navbar></app-navbar>
+<app-navbara></app-navbara>
+<section class="main-container">
+  <div class="main-content">
+    <h2 class="title">Administrar Perfil</h2>
+
+    <div class="category-tabs">
+      <button class="tab-btn" [class.active]="currentView() === 'personales'" (click)="currentView.set('personales')">
+        <i class="fas fa-user-circle"></i> Datos Personales
+      </button>
+      <button class="tab-btn" [class.active]="currentView() === 'registro'" (click)="currentView.set('registro')">
+        <i class="fas fa-file-alt"></i> Nuevo Documento
+      </button>
+      <button class="tab-btn" [class.active]="currentView() === 'documentos'" (click)="currentView.set('documentos')">
+        <i class="fas fa-list-check"></i> Mis Documentos
+      </button>
+    </div>
+
+    <div class="content-display">
+      @if (currentView() === 'personales') {
+        <div class="box slide-up">
+          <h3 class="box-title">Actualizar Datos</h3>
+          <div class="form-group">
+            <label>Primer Nombre</label>
+            <input type="text" [ngModel]="primer_nombre()" (ngModelChange)="primer_nombre.set($event)">
+          </div>
+          <div class="form-group">
+            <label>Primer Apellido</label>
+            <input type="text" [ngModel]="primer_apellido()" (ngModelChange)="primer_apellido.set($event)">
+          </div>
+          <div class="form-group">
+            <label>Teléfono</label>
+            <input type="text" [ngModel]="telefono()" (ngModelChange)="telefono.set($event)">
+          </div>
+          <button class="btn btn-primary" (click)="actualizarUsuario()">
+            <i class="fas fa-save"></i> Guardar Cambios
+          </button>
+        </div>
+      }
+
+      @if (currentView() === 'registro') {
+        <div class="box slide-up">
+          <h3 class="box-title">Registrar Documento</h3>
+          <div class="form-group">
+            <label>Tipo Documento</label>
+            <select [ngModel]="id_tdocumento()" (ngModelChange)="id_tdocumento.set($event)">
+              <option value="">Seleccione...</option>
+              @for (t of tiposDoc(); track t.id_tdocumento) {
+                <option [value]="t.id_tdocumento">{{t.nombre}}</option>
+              }
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Número</label>
+            <input type="text" [ngModel]="numero_documento()" (ngModelChange)="numero_documento.set($event)">
+          </div>
+          <button class="btn btn-secondary" (click)="crearDocumento()">Guardar</button>
+        </div>
+      }
+
+      @if (currentView() === 'documentos') {
+        <div class="box slide-up">
+          <h3 class="box-title">Documentos Registrados</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr><th>Tipo</th><th>Número</th><th>Lugar</th><th>Estado</th></tr>
+              </thead>
+              <tbody>
+                @for (d of documentos(); track d.id_documento) {
+                  <tr>
+                    <td>{{d.tipo_documento}}</td>
+                    <td>{{d.numero_documento}}</td>
+                    <td>{{d.lugar_expedicion}}</td>
+                    <td>
+                      <span class="status-badge" [class.status-active]="d.estado === 1">
+                        {{d.estado === 1 ? 'Activo' : 'Inactivo'}}
+                      </span>
+                    </td>
+                  </tr>
+                } @empty {
+                  <tr><td colspan="4" class="no-data">No hay documentos.</td></tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+@if (notificationText()) {
+  <div class="floating-notification" [ngClass]="notificationType()" 
+       [style.animation]="'flyIn 0.3s forwards'">
+    <i class="fas" [ngClass]="notificationType() === 'success' ? 'fa-check-circle' : 'fa-times-circle'"></i>
+    {{ notificationText() }}
+  </div>
+}
+<app-footer></app-footer>
