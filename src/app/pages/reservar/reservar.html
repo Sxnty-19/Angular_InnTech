@@ -37,7 +37,7 @@
               <ul class="list">
                 @for (hab of availRooms(); track hab.id) {
                   <li class="list-item">
-                    <span>{{hab.nombre}}</span>
+                    <span> habitacion {{hab.nombre}}</span>
                     <button class="btn-secondary" (click)="agregarHab(hab)">Agregar</button>
                   </li>
                 } @empty {
@@ -57,7 +57,7 @@
                 </li>
               }
             </ul>
-            <div class="summary-details">
+            <div class="list-title">
               <p>Habitaciones: <b>{{selectedRooms().length}}</b></p>
             </div>
             <button class="btn-primary btn-confirm" 

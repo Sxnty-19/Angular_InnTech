@@ -218,16 +218,32 @@ input[type="date"]:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #0f172a;
+  background: var(--color-dark);
   padding: 12px 15px;
   margin-bottom: 10px;
   border-radius: 8px;
   border-left: 4px solid var(--color-secondary);
 }
+/* Título Habitaciones Libres en blanco */
+.list-title {
+  color: white;
+  font-weight: 700;
+}
+
+/* Texto de habitaciones (disponibles y seleccionadas) */
+.list-item span {
+  color: white;
+  font-weight: 600;
+}
+
+/* También por si acaso el mensaje vacío */
+.empty-msg {
+  color: white;
+}
 
 .list-item.selected {
   border-left-color: var(--color-success);
-  background: #064e3b33;
+  background: #ffffff33;
 }
 
 /* ---------------------------------- */
